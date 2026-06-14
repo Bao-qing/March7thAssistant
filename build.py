@@ -76,8 +76,8 @@ def download_browser() -> None:
     log.info("[*] 下载集成浏览器...")
     # 通过环境变量 MARCH7TH_BROWSER_DOWNLOAD_USE_MIRROR 控制是否使用镜像
     try:
-        from module.game import cloud_game
-        cloud_game.download_intergrated_browser()
+        from module.game import browser_cloud_game
+        browser_cloud_game.download_intergrated_browser()
     except ImportError:
         import sys
         if sys.platform == "linux":
