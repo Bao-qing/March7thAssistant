@@ -876,6 +876,27 @@ class SettingInterface(ScrollArea):
             tr("开启后，将改用云·星穹铁道来执行清体力等自动化任务。无需固定窗口，可在后台运行。（模拟宇宙和锄大地仍需保持窗口全屏）"),
             "cloud_game_enable"
         )
+        self.cloudGameAdapterCard = ExpandableComboBoxSettingCard(
+            "cloud_game_adapter",
+            FIF.CONNECT,
+            tr("云游戏启动方式"),
+            tr("浏览器模式通过浏览器启动；直连模式无需启动浏览器，适合无图形界面或服务器环境，仍处实验阶段"),
+            {tr("浏览器模式（稳定）"): "browser", tr("直连模式（实验）"): "reverse"}
+        )
+        self.reverseCloudCookieCard = CustomPushSettingCard(
+            tr("修改"),
+            FIF.CODE,
+            tr("直连模式 Cookie"),
+            "reverse_cloud_cookie",
+            tr("用于直连模式登录云游戏，请粘贴浏览器中的 Cookie 字符串")
+        )
+        self.reverseCloudDeviceIdCard = PushSettingCardStr(
+            tr("修改"),
+            FIF.FINGERPRINT,
+            tr("直连设备 ID"),
+            "reverse_cloud_device_id",
+            empty_content=tr("未配置，首次运行时自动生成")
+        )
         self.cloudGameFullScreenCard = SwitchSettingCard1(
             FIF.FULL_SCREEN,
             tr("全屏运行"),
@@ -2611,6 +2632,11 @@ class SettingInterface(ScrollArea):
         ])
 
         self.CloudGameGroup.addSettingCard(self.cloudGameEnableCard)
+        self.CloudGameGroup.addSettingCard(self.cloudGameAdapterCard)
+        self.cloudGameAdapterCard.addSettingCards([
+            self.reverseCloudCookieCard,
+            self.reverseCloudDeviceIdCard
+        ])
         self.CloudGameGroup.addSettingCard(self.browserTypeCard)
         self.browserTypeCard.addSettingCards([
             self.browserDownloadUseMirrorCard,
@@ -2763,6 +2789,9 @@ class SettingInterface(ScrollArea):
 
         self.testNotifyCard.clicked.connect(lambda: start_task("notify"))
         self.notifyMasterEnableCard.switchChanged.connect(self.__refreshNotifiers)
+        self.reverseCloudCookieCard.button.clicked.connect(
+            lambda: self.__onNotifyParamCardClicked(self.reverseCloudCookieCard)
+        )
 
         connect_expand_state(self.afterFinishCard)
 
@@ -2796,6 +2825,7 @@ class SettingInterface(ScrollArea):
             connect_expand_state(notify_card)
         connect_expand_state(self.instanceTypeCard)
         connect_expand_state(self.echoofwarEnableCard)
+        connect_expand_state(self.cloudGameAdapterCard)
         connect_expand_state(self.browserTypeCard)
         connect_expand_state(self.browserHeadlessCard)
         self.universeEnableCard.switchChanged.connect(self.__onUniverseEnableCardSwitchChanged)

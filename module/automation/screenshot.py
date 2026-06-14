@@ -128,8 +128,9 @@ class Screenshot:
     @staticmethod
     def take_screenshot(title, crop=(0, 0, 1, 1), use_background_screenshot=None, prefer_frame_screenshot=True):
         if cfg.cloud_game_enable:
-            from module.game import cloud_game
-            screenshot_result = cloud_game.take_screenshot(crop=crop, prefer_frame=prefer_frame_screenshot)
+            from module.game import get_game_controller
+            game = get_game_controller()
+            screenshot_result = game.take_screenshot(crop=crop, prefer_frame=prefer_frame_screenshot)
             if not screenshot_result:
                 return False
 
@@ -142,8 +143,8 @@ class Screenshot:
             try:
                 screenshot = Screenshot._decode_cloud_game_screenshot(screenshot_bytes)
             except Exception as e:
-                cloud_game.log_debug(f"游戏画面截图解码失败，回退浏览器截图: {e}")
-                screenshot_result = cloud_game.take_screenshot(crop=crop, prefer_frame=False)
+                game.log_debug(f"游戏画面截图解码失败，回退浏览器截图: {e}")
+                screenshot_result = game.take_screenshot(crop=crop, prefer_frame=False)
                 if not screenshot_result:
                     return False
 

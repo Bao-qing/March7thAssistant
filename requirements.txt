@@ -42,4 +42,7 @@ rapidocr==3.8.1
 onnxruntime-directml==1.24.4; sys_platform == 'win32'
 onnxruntime==1.26.0; sys_platform == 'darwin' or sys_platform == 'linux'
 openvino==2026.2.0
+aiortc==1.14.0
+cryptography==48.0.1
+websockets==16.0
 # paddlepaddle==3.3.0; python_version <= '3.13'

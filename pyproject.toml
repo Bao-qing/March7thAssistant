@@ -48,6 +48,9 @@ dependencies = [
     "onnxruntime==1.26.0; sys_platform == 'darwin' or sys_platform == 'linux'",
     "openvino==2026.2.0",
     "py7zr==1.1.0",
+    "aiortc==1.14.0",
+    "cryptography==48.0.1",
+    "websockets==16.0",
 ]
 
 [dependency-groups]
@@ -79,6 +82,9 @@ docker = [
     "rapidocr==3.8.1",
     "onnxruntime==1.26.0",
     "openvino==2026.2.0",
+    "aiortc==1.14.0",
+    "cryptography==48.0.1",
+    "websockets==16.0",
 ]
 
 build = [
